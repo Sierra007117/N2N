@@ -1,10 +1,12 @@
 import argparse
-import numpy as np
 from pathlib import Path
+
+import numpy as np
 from keras.callbacks import LearningRateScheduler, ModelCheckpoint
 from keras.optimizers import Adam
-from model import get_model, PSNR, L0Loss, UpdateAnnealingParameter
+
 from generator import NoisyImageGenerator, ValGenerator
+from model import PSNR, L0Loss, UpdateAnnealingParameter, get_model
 from noise_model import get_noise_model
 
 
@@ -80,7 +82,8 @@ def main():
 
     if loss_type == "l0":
         l0 = L0Loss()
-        callbacks.append(UpdateAnnealingParameter(l0.gamma, nb_epochs, verbose=1))
+        callbacks.append(UpdateAnnealingParameter(
+            l0.gamma, nb_epochs, verbose=1))
         loss_type = l0()
 
     model.compile(optimizer=opt, loss=loss_type, metrics=[PSNR])
