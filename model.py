@@ -1,10 +1,11 @@
-from keras.models import Model
-from keras.layers import Input, Add, PReLU, Conv2DTranspose, Concatenate, MaxPooling2D, UpSampling2D, Dropout
+import tensorflow as tf
+from keras import backend as K
+from keras.callbacks import Callback
+from keras.layers import (Add, Concatenate, Conv2DTranspose, Dropout, Input,
+                          MaxPooling2D, PReLU, UpSampling2D)
 from keras.layers.convolutional import Conv2D
 from keras.layers.normalization import BatchNormalization
-from keras.callbacks import Callback
-from keras import backend as K
-import tensorflow as tf
+from keras.models import Model
 
 
 class L0Loss:
@@ -34,8 +35,8 @@ class UpdateAnnealingParameter(Callback):
 
 
 def tf_log10(x):
-    numerator = tf.log(x)
-    denominator = tf.log(tf.constant(10, dtype=numerator.dtype))
+    numerator = tf.math.log(x)
+    denominator = tf.math.log(tf.constant(10, dtype=numerator.dtype))
     return numerator / denominator
 
 
